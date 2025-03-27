@@ -1,0 +1,11 @@
+name: "Hello World Workflow"
+on:
+    push:
+        branches:
+            - master
+jobs:
+    hello_world:
+        runs-on: windows-lastest
+        steps:
+            - name: "print hello world"
+            run: echo "hello world! welcome charan" 
