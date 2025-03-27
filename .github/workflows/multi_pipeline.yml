@@ -5,7 +5,7 @@ on:
             - master
 jobs:
     on-push:
-        if: github.event == 'push'
+        if: github.event_name == 'push'
         runs-on: windows-latest
         steps:
           -  name: running on master/test push
