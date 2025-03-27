@@ -5,7 +5,7 @@ on:
             - master
 jobs:
     hello_world:
-        runs-on: windows-lastest
+        runs-on: windows-latest
         steps:
           - name: "print hello world"
             run: echo "hello world! welcome charan" 
