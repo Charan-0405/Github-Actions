@@ -3,16 +3,52 @@ on:
     push:
         branches:
             - master
+    pull_request:
+        branches: 
+            - master
+        types:
+            - closed
+            - opened
+    workflow_dispatch :
+    schedule: 
+        - cron: "0 10 * * 2,4"
 jobs:
-    on-push:
+    on-push: #job1
         if: github.event_name == 'push'
         runs-on: windows-latest
         steps:
-          -  name: running on master/test push
-             run: echo "running on master/test push"
-    on-pull:
+          - name: running on master/test push
+            run: echo "running on master/test push"
+    on-pull:  #job2
         if: github.event_name == 'pull'
         runs-on: windows-latest
         steps:
-         -  name: running on master/test push
-            run: echo "running on master/test push"
+         -  name: running on pull request
+            run: echo "running on pull request"
+    on-workflow-dispatch :  #job3
+        if: github.event_name =='workflow_dispatch'
+        runs-on : windows-latest
+        steps:
+            - name: running on workflow_dispatch
+              run : echo "running on workflow dispatch"
+
+    on-pull-request-closed:  #job4
+        if: github.event_name == 'pull_request' && github.action == 'closed'
+        runs-on: windows-latest
+        steps:
+            - name: running on pull_request closed
+              run: echo "running on pull_request closed"
+
+    on-pull-request-opened:  #job5
+        if: github.event_name == 'pull_request' && github.action == 'opened'
+        runs-on: windows-latest
+        steps:
+             - name: running on pull_request opened
+               run: echo "running on pull_request opened"    
+    on-schdule:  #job6
+        if: github.event_name == 'schedule'
+        runs-on: windows-latest
+        steps:
+            - name: 'running on schedule'
+              run : echo "running on schedule"
+
