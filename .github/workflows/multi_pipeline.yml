@@ -1,61 +1,56 @@
-name: "Multi event pipeline / workflow" # Name of the pipeline
-on: 
-    push: # Event: Whenever a push is made to the repository on the master / test branch
+name: multi_pipeline
+on:
+    push:
         branches:
             - master
             - charan
-    schedule:
-        - cron: "0 10 * * 2,4"
-    pull_request: # Event: Whenever a pull request is made to the repository
-        branches:
+    pull_request:
+        branches: 
             - master
             - charan
         types:
             - closed
             - opened
-    workflow_dispatch: 
-    
-
+    workflow_dispatch :
+    schedule: 
+        - cron: "0 10 * * 2,4"
 jobs:
-    on-push: # Job 1
-        if: github.event_name == 'push' 
-        runs-on: windows-latest
-        steps: # Steps to be executed in the job
-            - name: "Running on master/test push" # Step 1
-              run: echo "Running on master/test push"
-
-    on-pull-request: # Job 2
-        if: github.event_name == 'pull_request'
-        runs-on: windows-latest
-        steps: # Steps to be executed in the job
-            - name: "Running on pull request" # Step 1
-              run: echo "Running on pull request"
-
-    on-pull-request-opened:
-        if: github.event_name == 'pull_request' && github.event.action == 'opened'
+    on-push: #job1
+        if: github.event_name == 'push'
         runs-on: windows-latest
         steps:
-            - name: "Running on pull request opened"
-              run: echo "Running on pull request opened"
-    
-    on-pull-request-closed:
+          - name: running on master/test push
+            run: echo "running on master/test push"
+    on-pull:  #job2
+        if: github.event_name == 'pull'
+        runs-on: windows-latest
+        steps:
+         -  name: running on pull request
+            run: echo "running on pull request"
+    on-workflow-dispatch :  #job3
+        if: github.event_name =='workflow_dispatch'
+        runs-on : windows-latest
+        steps:
+            - name: running on workflow_dispatch
+              run : echo "running on workflow dispatch"
+
+    on-pull-request-closed:  #job4
         if: github.event_name == 'pull_request' && github.event.action == 'closed'
         runs-on: windows-latest
         steps:
-            - name: "Running on pull request closed"
-              run: echo "Running on pull request closed"
+            - name: running on pull_request closed
+              run: echo "running on pull_request closed"
 
-    on-workflow-dispatch: # Job 3
-        if: github.event_name == 'workflow_dispatch'
+    on-pull-request-opened:  #job5
+        if: github.event_name == 'pull_request' && github.event.action == 'opened'
         runs-on: windows-latest
-        steps: # Steps to be executed in the job
-            - name: "Running on workflow dispatch" # Step 1
-              run: echo "Running on workflow dispatch"
-
-    on-schedule: # Job 4
+        steps:
+             - name: running on pull_request opened
+               run: echo "running on pull_request opened"    
+    on-schdule:  #job6
         if: github.event_name == 'schedule'
         runs-on: windows-latest
-        steps: # Steps to be executed in the job
-            - name: "Running on schedule" # Step 1
-              run: echo "Running on schedule"
-    
+        steps:
+            - name: 'running on schedule'
+              run : echo "running on schedule"
+
