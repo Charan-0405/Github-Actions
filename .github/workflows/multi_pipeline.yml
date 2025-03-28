@@ -7,7 +7,6 @@ on:
     pull_request:
         branches: 
             - master
-            - charan
         types:
             - closed
             - opened
@@ -22,7 +21,7 @@ jobs:
           - name: running on master/test push
             run: echo "running on master/test push"
     on-pull:  #job2
-        if: github.event_name == 'pull'
+        if: github.event_name == 'pull_request'
         runs-on: windows-latest
         steps:
          -  name: running on pull request
